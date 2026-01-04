@@ -2,7 +2,7 @@ import validator from "../utils/validator.js"
 import models from "../model/models.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-
+//my services
 const services = {}
 
 services.signup = async (username, email, password) => {
