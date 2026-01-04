@@ -1,0 +1,14 @@
+#root {
+  /* Default Mobile Styles */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Desktop "framed" look */
+@media (min-width: 768px) {
+  #root {
+    width: 75%;
+    margin-top: -78px;
+    margin-bottom: -383px;
+  }
+}
