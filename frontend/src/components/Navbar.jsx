@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/icon.svg'
+import logo from '../assets/bicon.png'
+import logo2 from '../assets/icon.png'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
     return (
-        <nav className="flex sticky top-0 z-50 items-center justify-between px-8 py-5 border-b border-white/10 bg-[#242424] text-white">
+        <nav className="flex sticky top-0 z-50 items-center justify-between px-8 py-1.5 border-b border-white/10 bg-[#242424] text-white">
             {/* Logo Section */}
             <div className="flex items-center gap-3">
-                <img src={logo} alt="CommentMe Logo" className='rounded' />
+                <img src={logo} alt="CommentMe Logo" className='rounded w-16 h-16 hover:cursor-pointer' />
                 <span className="text-2xl font-medium tracking-tight">CommentMe</span>
             </div>
 
