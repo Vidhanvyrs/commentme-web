@@ -29,6 +29,15 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.post('/logout', auth, async (req, res) => {
+    try {
+        const result = await services.logout()
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 router.post('/forgot-password', async (req, res) => {
     try {
         const { identifier, newPassword, confirmPassword } = req.body
