@@ -40,6 +40,13 @@ services.login = async (username, password) => {
     }
 }
 
+services.logout = async () => {
+    // Since we are using stateless JWT, the backend doesn't store the session.
+    // The client is responsible for deleting the token.
+    // If we implemented a token blacklist, we would add the token here.
+    return { message: "Logged out successfully" }
+}
+
 services.forgetPassword = async (identifier, newPassword, confirmPassword) => {
     try {
         if (!identifier || !newPassword || !confirmPassword) {
