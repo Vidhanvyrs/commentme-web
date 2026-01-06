@@ -60,6 +60,16 @@
   --sidebar-ring: oklch(0.708 0 0)
 }
 
+.homepage-frame {
+  /* Responsive "framed" look - only on desktop */
+  /* @media (min-width: 768px) { */
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  margin-top: 0px;
+  margin-bottom: 0px;
+  /* } */
+}
+
 body {
   margin: 0;
   display: block;
