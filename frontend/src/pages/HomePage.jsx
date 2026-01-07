@@ -24,6 +24,7 @@ import tabnine from "../assets/tabnine.png"
 import trae from "../assets/trae.png"
 import windsuf from "../assets/windsurf.svg"
 import zed from "../assets/zed.png"
+import { useNavigate } from 'react-router-dom'
 
 const SKILLS_DATA = [
     {
@@ -115,6 +116,10 @@ const WHO_USES_DATA = [
 
 const HomePage = () => {
     const [activeTab, setActiveTab] = useState(0)
+    const navigate = useNavigate()
+    const loginPage = () => {
+        navigate("/login")
+    }
     return (
         <div className="text-white font-sans relative overflow-hidden h-full w-full">
             <DotPattern
@@ -131,7 +136,7 @@ const HomePage = () => {
                 </h1>
                 <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
                     <Highlighter action="underline" color="#3e9cc4ff">Commentme-CLI</Highlighter> handles each and every comment in your codebase, cleans it and <br className="hidden md:block" />
-                    saves it in a database. Henceforth, it makes debugging more efficient and easy, Ultimately saving you &nbsp;<Highlighter action="highlight" color="#F4D06F"> <p className="text-black font-bold">  time and effort.</p></Highlighter>
+                    saves it in a database. Henceforth, it makes debugging more efficient and easy, Ultimately saving you &nbsp;<Highlighter action="highlight" color="#F4D06F"> <span className="text-black font-bold">  time and effort.</span></Highlighter>
                 </p>
             </div>
 
@@ -161,7 +166,7 @@ const HomePage = () => {
                 <div className="border-r border-t border-white/10 bg-[#3e9cc4ff] px-5 py-5 text-2xl tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center">
                     Demo
                 </div>
-                <div className="border-t border-white/10 bg-[#F4D06F] text-[#242424] px-5 py-5 text-2xl tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center">
+                <div className="border-t border-white/10 bg-[#F4D06F] text-[#242424] px-5 py-5 text-2xl tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center" onClick={loginPage}>
                     Get Started
                 </div>
             </div>

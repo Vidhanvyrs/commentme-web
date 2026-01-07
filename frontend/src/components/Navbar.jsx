@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/bicon.png'
 import logo2 from '../assets/icon.png'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
+
+    const navigate = useNavigate()
+    const loginPage = () => {
+        navigate("/login")
+    }
 
     return (
         <nav className="flex sticky top-0 z-50 items-center justify-between px-8 py-1.5 border-b border-white/10 bg-[#242424] text-white">
@@ -41,8 +46,8 @@ const Navbar = () => {
 
             {/* CTA Button - Hidden on mobile to save space, or keep it if preferred. Let's hide it and put it in menu */}
             <div className="hidden lg:block">
-                <button className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer">
-                    Get Started
+                <button className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer" onClick={loginPage}>
+                    {isLogin ? "Dashboard" : "Get Started"}
                 </button>
             </div>
 
@@ -53,7 +58,7 @@ const Navbar = () => {
                     <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Integrations</Link>
                     <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>About Us</Link>
                     <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Pricing</Link>
-                    <button className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer w-3/4">
+                    <button className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer w-3/4" onClick={loginPage}>
                         {isLogin ? "Dashboard" : "Get Started"}
                     </button>
                 </div>

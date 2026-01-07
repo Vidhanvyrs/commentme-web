@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000'; // Adjust if your backend runs on a different port
+const API_URL = 'http://localhost:8080'; // Adjust if your backend runs on a different port
 
 const api = {
     login: async (username, password) => {

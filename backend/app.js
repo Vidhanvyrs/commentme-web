@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 
 app.use("/", router);
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8080
 
 // Connect to DB then start server
 connectDB().then(() => {
