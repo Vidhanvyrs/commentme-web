@@ -29,14 +29,51 @@ services.login = async (username, password) => {
             throw new Error("Invalid username or password")
         }
 
-        const token = jwt.sign(
+        // Generate access token (short-lived)
+        const accessToken = jwt.sign(
             { userId: user._id, username: user.username },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '15m' } // 15 minutes
         )
-        return { token, userId: user._id }
+
+        // Generate refresh token (long-lived)
+        const refreshToken = jwt.sign(
+            { userId: user._id, username: user.username },
+            process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET, // Use separate secret in production
+            { expiresIn: '7d' } // 7 days
+        )
+
+        return { accessToken, refreshToken, userId: user._id }
     } catch (error) {
         throw error
+    }
+}
+
+services.refreshAccessToken = async (refreshToken) => {
+    try {
+        if (!refreshToken) {
+            throw new Error("Refresh token required")
+        }
+
+        // Verify refresh token
+        const decoded = jwt.verify(
+            refreshToken,
+            process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET
+        )
+
+        // Generate new access token
+        const accessToken = jwt.sign(
+            { userId: decoded.userId, username: decoded.username },
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+        )
+
+        return { accessToken }
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            throw new Error("Refresh token expired")
+        }
+        throw new Error("Invalid refresh token")
     }
 }
 

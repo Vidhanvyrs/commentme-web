@@ -33,18 +33,15 @@ const AuthPage = () => {
                     throw new Error("Please fill in all fields");
                 }
                 const result = await api.login(formData.username, formData.password);
-                localStorage.setItem('token', result.token);
-                localStorage.setItem('userId', result.userId);
-                navigate('/');
+                // Token is now stored in memory by api.js
+                navigate('/dashboard');
             } else {
                 if (!formData.username || !formData.email || !formData.password) {
                     throw new Error("Please fill in all fields");
                 }
                 await api.signup(formData.username, formData.email, formData.password);
-                // Auto login after signup or ask user to login? 
-                // For now, let's switch to login mode and show success
                 setIsLogin(true);
-                setError('Account created successfully! Please log in.'); // Using error state for message for now, ideally separate
+                setError('Account created successfully! Please log in.');
                 setFormData({ username: '', email: '', password: '' });
             }
         } catch (err) {

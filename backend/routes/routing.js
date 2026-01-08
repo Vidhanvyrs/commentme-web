@@ -23,15 +23,40 @@ router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body
         const result = await services.login(username, password)
-        res.status(200).json(result)
+
+        // Set refresh token as HTTP-only cookie
+        res.cookie('refreshToken', result.refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        })
+
+        // Return access token in response body
+        res.status(200).json({
+            accessToken: result.accessToken,
+            userId: result.userId
+        })
     } catch (error) {
         res.status(401).json({ message: error.message || "Authentication failed" })
+    }
+})
+
+router.post('/refresh', async (req, res) => {
+    try {
+        const refreshToken = req.cookies.refreshToken
+        const result = await services.refreshAccessToken(refreshToken)
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(401).json({ message: error.message || "Token refresh failed" })
     }
 })
 
 router.post('/logout', auth, async (req, res) => {
     try {
         const result = await services.logout()
+        // Clear refresh token cookie
+        res.clearCookie('refreshToken')
         res.status(200).json(result)
     } catch (error) {
         res.status(500).json({ message: error.message })
