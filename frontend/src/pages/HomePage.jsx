@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Video, FileSearch, Send, Feather, SquarePen, FilePlus, CheckSquare, UserPlus, List, BadgeDollarSign, LayoutTemplate, ArrowRight, Minus, Plus, Database, FileText, Languages } from 'lucide-react'
+import { Video, FileSearch, Send, Feather, SquarePen, FilePlus, CheckSquare, UserPlus, List, BadgeDollarSign, LayoutTemplate, ArrowRight, Minus, Plus, Database, FileText, Languages, Github, Copy, Check } from 'lucide-react'
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { cn } from "@/lib/utils"
 import { Globe } from "@/components/ui/globe"
@@ -24,7 +24,7 @@ import tabnine from "../assets/tabnine.png"
 import trae from "../assets/trae.png"
 import windsuf from "../assets/windsurf.svg"
 import zed from "../assets/zed.png"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SKILLS_DATA = [
     {
@@ -120,6 +120,14 @@ const HomePage = () => {
     const loginPage = () => {
         navigate("/login")
     }
+    const command = "npm install -g commentme-cli";
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(command);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+    };
     return (
         <div className="text-white font-sans relative overflow-hidden h-full w-full">
             <DotPattern
@@ -138,6 +146,36 @@ const HomePage = () => {
                     <Highlighter action="underline" color="#3e9cc4ff">Commentme-CLI</Highlighter> handles each and every comment in your codebase, cleans it and <br className="hidden md:block" />
                     saves it in a database. Henceforth, it makes debugging more efficient and easy, Ultimately saving you &nbsp;<Highlighter action="highlight" color="#F4D06F"> <span className="text-black font-bold">  time and effort.</span></Highlighter>
                 </p>
+                {/* <div className='flex mt-20 items-center justify-center gap-2'>
+                    <Github />
+                    <div className='border w-80 border-white/10 p-2'>
+                        <input type="text" disabled value="npm install -g commentme-cli" className='w-full' />
+                    </div>
+                </div> */}
+                <div className="mt-20 flex items-center gap-2 justify-center">
+                    <Github className="h-8 w-8 text-white/80" />
+                    <div className="flex items-center gap-3 rounded-xl border border-violet-500/30 bg-black/60 px-4 py-3 backdrop-blur-md">
+
+                        <span className="font-mono text-lg text-white/90">
+                            <span className="text-green-400 mr-1">$</span>
+                            {command}
+                        </span>
+
+                        {/* Copy Button */}
+                        <button
+                            onClick={handleCopy}
+                            className="ml-2 rounded-md p-1 text-white/70 transition hover:bg-white/10 hover:text-white"
+                            aria-label="Copy command"
+                        >
+                            {copied ? (
+                                <Check className="h-4 w-4 text-green-400" />
+                            ) : (
+                                <Copy className="h-4 w-4" />
+                            )}
+                        </button>
+                    </div>
+                </div>
+                <p className="text-md text-gray-400 mt-2">Read the Documentation <Link to="/docs" className="text-blue-400 underline">here</Link></p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-7 border-b border-white/10 text-[11px] uppercase tracking-widest font-medium text-gray-500 relative z-10 bg-[#242424]/80 backdrop-blur-sm">
@@ -194,7 +232,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="relative -mt-26 bg-[#D2B48C]/5 z-10 border-t border-white/10 overflow-hidden">
+            <div id='skills' className="relative -mt-26 bg-[#D2B48C]/5 z-10 border-t border-white/10 overflow-hidden">
                 <div className="px-6 py-24 max-w-7xl mx-auto">
                     <span className="bg-[#F4D06F] text-[#242424] text-xs font-bold px-2 py-1 uppercase tracking-widest mb-6 inline-block">Skills</span>
                     <h2 className="text-5xl md:text-7xl font-normal tracking-tight mb-8">
@@ -240,7 +278,7 @@ const HomePage = () => {
                     </div>
                 ))}
             </div>
-            <div className="relative z-10 py-24 border-t border-white/10  overflow-hidden">
+            <div id='integrations' className="relative z-10 py-24 border-t border-white/10  overflow-hidden">
                 <div className="text-center relative z-10">
                     <h2 className="text-2xl md:text-4xl font-normal tracking-tight mb-4">
                         Integrate the tool seamlessly into your existing IDE environment to get started.
@@ -311,7 +349,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className='relative z-10 py-24 border-t border-white/10 overflow-hidden'>
+            <div id='pricing' className='relative z-10 py-24 border-t border-white/10 overflow-hidden'>
                 <div className="relative z-10 container mx-auto px-4 text-center">
                     <span className="bg-[#F4D06F] text-[#242424] text-xs font-bold px-2 py-1 uppercase tracking-widest mb-8 inline-block">Pricing</span>
                     <h2 className="text-3xl md:text-5xl font-normal tracking-tight mb-8 text-white">

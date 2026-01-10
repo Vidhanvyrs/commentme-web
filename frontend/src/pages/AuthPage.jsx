@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { FileTreeDemo } from '@/components/FileTreeDemo';
 
 const AuthPage = () => {
@@ -10,6 +11,7 @@ const AuthPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         username: '',
@@ -32,8 +34,8 @@ const AuthPage = () => {
                 if (!formData.username || !formData.password) {
                     throw new Error("Please fill in all fields");
                 }
-                const result = await api.login(formData.username, formData.password);
-                // Token is now stored in memory by api.js
+                const result = await login(formData.username, formData.password);
+                // Token is now stored in memory by api.js and user state updated in context
                 navigate('/dashboard');
             } else {
                 if (!formData.username || !formData.email || !formData.password) {
