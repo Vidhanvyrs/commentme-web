@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/bicon.png'
-import logo2 from '../assets/icon.png'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    const loginPage = () => {
-        navigate("/login")
-    }
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
 
     return (
         <nav className="flex sticky top-0 z-50 items-center justify-between px-8 py-1.5 border-b border-white/10 bg-[#242424] text-white">
             {/* Logo Section */}
-            <div className="flex items-center gap-3">
-                <img src={logo} alt="CommentMe Logo" className='rounded w-16 h-16 hover:cursor-pointer' />
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+                <img src={logo} alt="CommentMe Logo" className='rounded w-16 h-16' />
                 <span className="text-2xl font-medium tracking-tight">CommentMe</span>
             </div>
 
@@ -24,8 +29,9 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-8 text-[13px] font-medium tracking-widest text-gray-300">
                 <Link to="#" className="hover:text-white transition-colors uppercase">Skills</Link>
                 <Link to="#" className="hover:text-white transition-colors uppercase">Integrations</Link>
-                <Link to="#" className="hover:text-white transition-colors uppercase">About Us</Link>
+                <Link to="/docs" className="hover:text-white transition-colors uppercase">Docs</Link>
                 <Link to="#" className="hover:text-white transition-colors uppercase">Pricing</Link>
+                {user && <Link to="/dashboard" className="hover:text-white transition-colors uppercase text-blue-400">Dashboard</Link>}
             </div>
 
             {/* Mobile Menu Button - Visible only on mobile */}
@@ -44,10 +50,13 @@ const Navbar = () => {
                 </button>
             </div>
 
-            {/* CTA Button - Hidden on mobile to save space, or keep it if preferred. Let's hide it and put it in menu */}
+            {/* CTA Button */}
             <div className="hidden lg:block">
-                <button className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer" onClick={loginPage}>
-                    {isLogin ? "Dashboard" : "Get Started"}
+                <button
+                    className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer"
+                    onClick={user ? handleLogout : () => navigate('/login')}
+                >
+                    {user ? "Logout" : "Get Started"}
                 </button>
             </div>
 
@@ -56,10 +65,18 @@ const Navbar = () => {
                 <div className="absolute top-[72px] left-0 w-full bg-[#242424] border-b border-white/10 z-50 flex flex-col items-center py-6 gap-6 lg:hidden">
                     <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Skills</Link>
                     <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Integrations</Link>
-                    <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>About Us</Link>
+                    <Link to="/docs" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Docs</Link>
                     <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Pricing</Link>
-                    <button className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer w-3/4" onClick={loginPage}>
-                        {isLogin ? "Dashboard" : "Get Started"}
+                    {user && (
+                        <Link to="/dashboard" className="nav-link-mobile text-blue-400" onClick={() => setIsMenuOpen(false)}>
+                            Dashboard
+                        </Link>
+                    )}
+                    <button
+                        className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer w-3/4"
+                        onClick={user ? () => { setIsMenuOpen(false); handleLogout(); } : () => { setIsMenuOpen(false); navigate('/login'); }}
+                    >
+                        {user ? "Logout" : "Get Started"}
                     </button>
                 </div>
             )}
