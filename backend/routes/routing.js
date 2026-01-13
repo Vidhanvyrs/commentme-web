@@ -1,6 +1,7 @@
 import express from 'express'
 import services from '../service/services.js'
 import auth from '../middleware/auth.js'
+import aiService from '../service/aiService.js'
 
 const router = express.Router()
 
@@ -138,6 +139,28 @@ router.post('/comments/upload', auth, async (req, res) => {
         res.status(200).json(result)
     } catch (error) {
         res.status(500).json({ message: error.message || "Error uploading comments" })
+    }
+})
+
+router.post('/ai/summarize', auth, async (req, res) => {
+    try {
+        const { text } = req.body
+        if (!text) throw new Error("Text is required")
+        const summary = await aiService.summarizeText(text)
+        res.status(200).json({ summary })
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Summarization failed" })
+    }
+})
+
+router.post('/ai/translate', auth, async (req, res) => {
+    try {
+        const { text, targetLanguage } = req.body
+        if (!text || !targetLanguage) throw new Error("Text and target language are required")
+        const translation = await aiService.translateText(text, targetLanguage)
+        res.status(200).json({ translation })
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Translation failed" })
     }
 })
 
