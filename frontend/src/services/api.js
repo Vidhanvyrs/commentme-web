@@ -167,6 +167,39 @@ const api = {
         } catch (error) {
             throw error;
         }
+    },
+
+    // AI Features
+    summarize: async (text) => {
+        try {
+            const response = await api.fetchWithAuth(`${API_URL}/ai/summarize`, {
+                method: 'POST',
+                body: JSON.stringify({ text }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Summarization failed');
+            }
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    translate: async (text, targetLanguage) => {
+        try {
+            const response = await api.fetchWithAuth(`${API_URL}/ai/translate`, {
+                method: 'POST',
+                body: JSON.stringify({ text, targetLanguage }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Translation failed');
+            }
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

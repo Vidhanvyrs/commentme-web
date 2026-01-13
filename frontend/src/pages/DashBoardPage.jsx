@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react'
 import api from '../services/api'
 import { ChevronRight } from 'lucide-react'
 
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
 const DashBoardPage = () => {
     const [codebases, setCodebases] = useState([])
     const [loading, setLoading] = useState(true)
@@ -13,6 +23,14 @@ const DashBoardPage = () => {
     const [notes, setNotes] = useState('')
     const [originalNote, setOriginalNote] = useState('') // Track original value
     const [updateLoading, setUpdateLoading] = useState(false)
+
+    // AI Modal State
+    const [showAIModal, setShowAIModal] = useState(false)
+    const [aiStep, setAiStep] = useState('MENU') // MENU, TRANSLATE_CONFIG, RESULT
+    const [aiResult, setAiResult] = useState('')
+    const [isAiLoading, setIsAiLoading] = useState(false)
+    const [targetLanguage, setTargetLanguage] = useState('Spanish')
+    const [aiAction, setAiAction] = useState(null) // 'SUMMARIZE' or 'TRANSLATE'
 
     // Pagination state
     const [codebasePage, setCodebasePage] = useState(0)
@@ -142,8 +160,154 @@ const DashBoardPage = () => {
         }
     }
 
+    const handleAIOpen = () => {
+        setShowAIModal(true)
+        setAiStep('MENU')
+        setAiResult('')
+        setAiAction(null)
+    }
+
+    const handleAIClose = () => {
+        setShowAIModal(false)
+    }
+
+    const handleAIActionSelect = (action) => {
+        setAiAction(action)
+        if (action === 'SUMMARIZE') {
+            handleAISubmit(action)
+        } else if (action === 'TRANSLATE') {
+            setAiStep('TRANSLATE_CONFIG')
+        }
+    }
+
+    const handleAISubmit = async (action, lang = null) => {
+        try {
+            setIsAiLoading(true)
+            setAiStep('RESULT')
+            let result;
+            if (action === 'SUMMARIZE') {
+                const response = await api.summarize(notes)
+                result = response.summary
+            } else if (action === 'TRANSLATE') {
+                const response = await api.translate(notes, lang || targetLanguage)
+                result = response.translation
+            }
+            setAiResult(result)
+        } catch (err) {
+            console.error('AI Error:', err)
+            setAiResult('Error: ' + err.message)
+        } finally {
+            setIsAiLoading(false)
+        }
+    }
+
+    const handleReplace = () => {
+        setNotes(aiResult)
+        handleAIClose()
+    }
+
     return (
-        <div className='min-h-screen bg-[#242424] text-white p-8'>
+        <div className='min-h-screen bg-[#242424] text-white p-8 relative'>
+
+            {/* AI Modal */}
+            {showAIModal && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-[#1e1e1e] border border-white/10 rounded-xl w-full max-w-md p-6 shadow-2xl">
+                        {aiStep === 'MENU' && (
+                            <>
+                                <h3 className="text-xl font-bold mb-6 text-center">AI Bliss</h3>
+                                <div className="space-y-4">
+                                    <button
+                                        onClick={() => handleAIActionSelect('SUMMARIZE')}
+                                        className="w-full hover:cursor-pointer bg-white/5 border border-white/10 p-4 rounded-lg flex items-center gap-3 hover:bg-white/10 transition-colors group"
+                                    >
+                                        <div className="bg-orange-500/20 p-2 rounded-full text-orange-400 group-hover:bg-orange-500/30">📝</div>
+                                        <span className="font-medium">Summarize this note</span>
+                                    </button>
+                                    <button
+                                        onClick={() => handleAIActionSelect('TRANSLATE')}
+                                        className="w-full hover:cursor-pointer bg-white/5 border border-white/10 p-4 rounded-lg flex items-center gap-3 hover:bg-white/10 transition-colors group"
+                                    >
+                                        <div className="bg-blue-500/20 p-2 rounded-full text-blue-400 group-hover:bg-blue-500/30">🌐</div>
+                                        <span className="font-medium">Translate this note</span>
+                                    </button>
+                                </div>
+                                <div className="flex justify-between mt-8">
+                                    <button onClick={handleAIClose} className="px-4 hover:cursor-pointer py-2 text-gray-400 hover:text-white transition-colors">leave it</button>
+                                </div>
+                            </>
+                        )}
+
+                        {aiStep === 'TRANSLATE_CONFIG' && (
+                            <>
+                                <h3 className="text-xl font-bold mb-6 text-center">Choose Language</h3>
+                                <div className="space-y-4">
+                                    <Select value={targetLanguage}
+                                        onValueChange={(value) => setTargetLanguage(value)}>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select a language" />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-[#1e1e1e] border border-white/10 rounded-lg p-3 text-white">
+                                            <SelectGroup>
+                                                <SelectLabel>Languages</SelectLabel>
+                                                <SelectItem value="English">English</SelectItem>
+                                                <SelectItem value="Hindi">Hindi</SelectItem>
+                                                <SelectItem value="Spanish">Spanish</SelectItem>
+                                                <SelectItem value="French">French</SelectItem>
+                                                <SelectItem value="German">German</SelectItem>
+                                                <SelectItem value="Japanese">Japanese</SelectItem>
+                                                <SelectItem value="Chinese">Chinese</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+
+                                </div>
+                                <div className="flex justify-between mt-8">
+                                    <button onClick={() => setAiStep('MENU')} className="px-4 hover:cursor-pointer py-2 text-gray-400 hover:text-white transition-colors">back</button>
+                                    <button
+                                        onClick={() => handleAISubmit('TRANSLATE')}
+                                        className="bg-white hover:cursor-pointer text-black px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+                                    >
+                                        lets go
+                                    </button>
+                                </div>
+                            </>
+                        )}
+
+                        {aiStep === 'RESULT' && (
+                            <>
+                                <h3 className="text-xl font-bold mb-4 text-center">
+                                    {isAiLoading ? 'Generating...' : 'AI Result'}
+                                </h3>
+                                <div className="bg-white/5 border border-white/10 rounded-lg p-4 min-h-[150px] max-h-[300px] overflow-y-auto">
+                                    {isAiLoading ? (
+                                        <div className='flex items-center justify-center h-full py-8'>
+                                            <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                        </div>
+                                    ) : (
+                                        <p className="text-gray-300 text-sm whitespace-pre-wrap">{aiResult}</p>
+                                    )}
+                                </div>
+                                {!isAiLoading && (
+                                    <div className="flex justify-between mt-6">
+                                        <button onClick={handleAIClose} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">leave it</button>
+                                        <button
+                                            onClick={handleReplace}
+                                            className="bg-white text-black px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+                                        >
+                                            Replace
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
+                </div>
+            )}
+
             <div className='max-w-7xl mx-auto'>
                 <h1 className='text-3xl font-bold mb-8'>Your Dashboard</h1>
 
@@ -308,7 +472,11 @@ const DashBoardPage = () => {
                                         </div>
 
                                         <div className='flex justify-between items-center'>
-                                            <button className='bg-orange-500/20 border border-orange-500 text-orange-500 rounded-lg p-3 hover:bg-orange-500/30 transition-colors hover:cursor-pointer'>
+                                            <button
+                                                onClick={handleAIOpen}
+                                                disabled={!selectedLineRange}
+                                                className={` bg-orange-500/20 border border-orange-500 text-orange-500 rounded-lg p-3 transition-colors ${selectedLineRange ? 'hover:bg-orange-500/30 hover:cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}
+                                            >
                                                 ✨
                                             </button>
                                             <button
