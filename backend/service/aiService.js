@@ -65,4 +65,36 @@ const translateText = async (text, targetLanguage) => {
     }
 };
 
-export default { summarizeText, translateText };
+const explainText = async (text) => {
+    try {
+        const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Access lazily
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "model": "google/gemma-3n-e2b-it:free",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": `Explain the following text or code snippet simply and concisely. Focus on the core logic and purpose. Avoid excessive boilerplate.\n\n"${text}"`
+                    }
+                ]
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`OpenRouter API error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content;
+    } catch (error) {
+        console.error("Explanation error:", error);
+        throw error;
+    }
+};
+
+export default { summarizeText, translateText, explainText };

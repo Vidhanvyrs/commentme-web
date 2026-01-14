@@ -200,6 +200,22 @@ const api = {
         } catch (error) {
             throw error;
         }
+    },
+
+    explain: async (text) => {
+        try {
+            const response = await api.fetchWithAuth(`${API_URL}/ai/explain`, {
+                method: 'POST',
+                body: JSON.stringify({ text }),
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Explanation failed');
+            }
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 };
 
