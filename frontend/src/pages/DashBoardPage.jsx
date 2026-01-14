@@ -173,7 +173,7 @@ const DashBoardPage = () => {
 
     const handleAIActionSelect = (action) => {
         setAiAction(action)
-        if (action === 'SUMMARIZE') {
+        if (action === 'SUMMARIZE' || action === 'UNDERSTAND') {
             handleAISubmit(action)
         } else if (action === 'TRANSLATE') {
             setAiStep('TRANSLATE_CONFIG')
@@ -191,6 +191,9 @@ const DashBoardPage = () => {
             } else if (action === 'TRANSLATE') {
                 const response = await api.translate(notes, lang || targetLanguage)
                 result = response.translation
+            } else if (action === 'UNDERSTAND') {
+                const response = await api.explain(notes)
+                result = response.explanation
             }
             setAiResult(result)
         } catch (err) {
@@ -230,6 +233,13 @@ const DashBoardPage = () => {
                                     >
                                         <div className="bg-blue-500/20 p-2 rounded-full text-blue-400 group-hover:bg-blue-500/30">🌐</div>
                                         <span className="font-medium">Translate this note</span>
+                                    </button>
+                                    <button
+                                        onClick={() => handleAIActionSelect('UNDERSTAND')}
+                                        className="w-full hover:cursor-pointer bg-white/5 border border-white/10 p-4 rounded-lg flex items-center gap-3 hover:bg-white/10 transition-colors group"
+                                    >
+                                        <div className="bg-purple-500/20 p-2 rounded-full text-purple-400 group-hover:bg-purple-500/30">💡</div>
+                                        <span className="font-medium">Make me understand</span>
                                     </button>
                                 </div>
                                 <div className="flex justify-between mt-8">

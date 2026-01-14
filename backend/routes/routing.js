@@ -164,4 +164,15 @@ router.post('/ai/translate', auth, async (req, res) => {
     }
 })
 
+router.post('/ai/explain', auth, async (req, res) => {
+    try {
+        const { text } = req.body
+        if (!text) throw new Error("Text is required")
+        const explanation = await aiService.explainText(text)
+        res.status(200).json({ explanation })
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Explanation failed" })
+    }
+})
+
 export default router
