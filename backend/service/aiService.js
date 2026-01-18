@@ -1,6 +1,4 @@
-// using global fetch
-
-const summarizeText = async (text) => {
+const summarizeText = async (text, model = "google/gemma-2-9b-it:free") => {
     try {
         const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Access lazily
         console.log("DEBUG: OPENROUTER_API_KEY:", OPENROUTER_API_KEY ? "Loaded" : "Missing");
@@ -11,7 +9,7 @@ const summarizeText = async (text) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "model": "google/gemma-3n-e2b-it:free",
+                "model": model,
                 "messages": [
                     {
                         "role": "user",
@@ -33,7 +31,7 @@ const summarizeText = async (text) => {
     }
 };
 
-const translateText = async (text, targetLanguage) => {
+const translateText = async (text, targetLanguage, model = "google/gemma-2-9b-it:free") => {
     try {
         const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Access lazily
         const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -43,7 +41,7 @@ const translateText = async (text, targetLanguage) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "model": "google/gemma-3n-e2b-it:free",
+                "model": model,
                 "messages": [
                     {
                         "role": "user",
@@ -65,7 +63,7 @@ const translateText = async (text, targetLanguage) => {
     }
 };
 
-const explainText = async (text) => {
+const explainText = async (text, model = "google/gemma-2-9b-it:free") => {
     try {
         const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Access lazily
         const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -75,7 +73,7 @@ const explainText = async (text) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "model": "google/gemma-3n-e2b-it:free",
+                "model": model,
                 "messages": [
                     {
                         "role": "user",
