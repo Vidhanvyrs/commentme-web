@@ -144,9 +144,9 @@ router.post('/comments/upload', auth, async (req, res) => {
 
 router.post('/ai/summarize', auth, async (req, res) => {
     try {
-        const { text } = req.body
+        const { text, model } = req.body
         if (!text) throw new Error("Text is required")
-        const summary = await aiService.summarizeText(text)
+        const summary = await aiService.summarizeText(text, model)
         res.status(200).json({ summary })
     } catch (error) {
         res.status(500).json({ message: error.message || "Summarization failed" })
@@ -155,9 +155,9 @@ router.post('/ai/summarize', auth, async (req, res) => {
 
 router.post('/ai/translate', auth, async (req, res) => {
     try {
-        const { text, targetLanguage } = req.body
+        const { text, targetLanguage, model } = req.body
         if (!text || !targetLanguage) throw new Error("Text and target language are required")
-        const translation = await aiService.translateText(text, targetLanguage)
+        const translation = await aiService.translateText(text, targetLanguage, model)
         res.status(200).json({ translation })
     } catch (error) {
         res.status(500).json({ message: error.message || "Translation failed" })
@@ -166,9 +166,9 @@ router.post('/ai/translate', auth, async (req, res) => {
 
 router.post('/ai/explain', auth, async (req, res) => {
     try {
-        const { text } = req.body
+        const { text, model } = req.body
         if (!text) throw new Error("Text is required")
-        const explanation = await aiService.explainText(text)
+        const explanation = await aiService.explainText(text, model)
         res.status(200).json({ explanation })
     } catch (error) {
         res.status(500).json({ message: error.message || "Explanation failed" })

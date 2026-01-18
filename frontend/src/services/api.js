@@ -170,11 +170,11 @@ const api = {
     },
 
     // AI Features
-    summarize: async (text) => {
+    summarize: async (text, model) => {
         try {
             const response = await api.fetchWithAuth(`${API_URL}/ai/summarize`, {
                 method: 'POST',
-                body: JSON.stringify({ text }),
+                body: JSON.stringify({ text, model }),
             });
             const data = await response.json();
             if (!response.ok) {
@@ -186,11 +186,11 @@ const api = {
         }
     },
 
-    translate: async (text, targetLanguage) => {
+    translate: async (text, targetLanguage, model) => {
         try {
             const response = await api.fetchWithAuth(`${API_URL}/ai/translate`, {
                 method: 'POST',
-                body: JSON.stringify({ text, targetLanguage }),
+                body: JSON.stringify({ text, targetLanguage, model }),
             });
             const data = await response.json();
             if (!response.ok) {
@@ -202,11 +202,11 @@ const api = {
         }
     },
 
-    explain: async (text) => {
+    explain: async (text, model) => {
         try {
             const response = await api.fetchWithAuth(`${API_URL}/ai/explain`, {
                 method: 'POST',
-                body: JSON.stringify({ text }),
+                body: JSON.stringify({ text, model }),
             });
             const data = await response.json();
             if (!response.ok) {

@@ -31,6 +31,21 @@ const DashBoardPage = () => {
     const [isAiLoading, setIsAiLoading] = useState(false)
     const [targetLanguage, setTargetLanguage] = useState('Spanish')
     const [aiAction, setAiAction] = useState(null) // 'SUMMARIZE' or 'TRANSLATE'
+    const [selectedModel, setSelectedModel] = useState('meta-llama/llama-3.3-70b-instruct:free')
+
+    const FREE_MODELS = [
+        "openai/gpt-oss-120b:free",
+        "xiaomi/mimo-v2-flash:free",
+        "mistralai/devstral-2512:free",
+        "tngtech/deepseek-r1t2-chimera:free",
+        "deepseek/deepseek-r1-0528:free",
+        "qwen/qwen3-coder:free",
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "google/gemma-3-27b-it:free",
+        "nvidia/nemotron-3-nano-30b-a3b:free",
+        "bytedance-seed/seedream-4.5",
+        "z-ai/glm-4.5-air:free"
+    ]
 
     // Pagination state
     const [codebasePage, setCodebasePage] = useState(0)
@@ -51,7 +66,6 @@ const DashBoardPage = () => {
                 setLoading(false)
             }
         }
-
         fetchCodebases()
     }, [])
 
@@ -186,13 +200,13 @@ const DashBoardPage = () => {
             setAiStep('RESULT')
             let result;
             if (action === 'SUMMARIZE') {
-                const response = await api.summarize(notes)
+                const response = await api.summarize(notes, selectedModel)
                 result = response.summary
             } else if (action === 'TRANSLATE') {
-                const response = await api.translate(notes, lang || targetLanguage)
+                const response = await api.translate(notes, lang || targetLanguage, selectedModel)
                 result = response.translation
             } else if (action === 'UNDERSTAND') {
-                const response = await api.explain(notes)
+                const response = await api.explain(notes, selectedModel)
                 result = response.explanation
             }
             setAiResult(result)
@@ -219,6 +233,23 @@ const DashBoardPage = () => {
                         {aiStep === 'MENU' && (
                             <>
                                 <h3 className="text-xl font-bold mb-6 text-center">AI Bliss</h3>
+
+                                <div className="mb-6">
+                                    <label className="text-sm text-gray-400 mb-2 block">Select Model</label>
+                                    <Select value={selectedModel} onValueChange={setSelectedModel}>
+                                        <SelectTrigger className="w-full bg-white/5 border-white/10">
+                                            <SelectValue placeholder="Select AI Model" />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-[#1e1e1e] border border-white/10 text-white max-h-[200px]">
+                                            <SelectGroup>
+                                                {FREE_MODELS.map((model) => (
+                                                    <SelectItem key={model} value={model}>{model}</SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
                                 <div className="space-y-4">
                                     <button
                                         onClick={() => handleAIActionSelect('SUMMARIZE')}
