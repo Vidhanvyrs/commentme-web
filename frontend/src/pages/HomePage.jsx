@@ -152,8 +152,8 @@ const HomePage = () => {
 
             <div className="py-24 px-4 text-center border-b border-white/10 relative z-10">
                 <h1 className="text-6xl md:text-8xl font-normal tracking-tight mb-8">
-                    Clean your <br />
-                    <Highlighter action="underline" color="#3e9cc4ff">cluttered codebase</Highlighter> with commentme
+                    Automate & Clean your <br />
+                    <Highlighter action="underline" color="#3e9cc4ff">commented codebase</Highlighter> with commentme
                 </h1>
                 <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
                     <Highlighter action="underline" color="#3e9cc4ff">Commentme-CLI</Highlighter> handles each and every comment in your codebase, cleans it and <br className="hidden md:block" />
