@@ -26,6 +26,7 @@ import windsuf from "../assets/windsurf.svg"
 import zed from "../assets/zed.png"
 import { Link, useNavigate } from 'react-router-dom'
 import { TerminalDemo } from '@/components/TerminalDemo'
+import { TerminalDemo2 } from '@/components/TerminalDemo2'
 
 const SKILLS_DATA = [
     {
@@ -115,8 +116,19 @@ const WHO_USES_DATA = [
 ]
 
 
+const NAV_ITEMS = [
+    "CLI Installation",
+    "Commands",
+    "Usage",
+    "Connection",
+    "AI Bliss",
+    "Tree",
+    "And more..."
+]
+
 const HomePage = () => {
     const [activeTab, setActiveTab] = useState(0)
+    const [activeNav, setActiveNav] = useState("CLI Installation")
     const navigate = useNavigate()
     const loginPage = () => {
         navigate("/login")
@@ -180,13 +192,18 @@ const HomePage = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-7 border-b border-white/10 text-[11px] uppercase tracking-widest font-medium text-gray-500 relative z-10 bg-[#242424]/80 backdrop-blur-sm">
-                <div className="py-6 text-center border-r border-white/10 md:border-b-0 border-b hover:text-white cursor-pointer transition-colors">CLI Installation</div>
-                <div className="py-6 text-center border-r border-white/10 md:border-b-0 border-b hover:text-white cursor-pointer transition-colors">Commands</div>
-                <div className="py-6 text-center border-r border-white/10 md:border-b-0 border-b hover:text-white cursor-pointer transition-colors">Usage</div>
-                <div className="py-6 text-center border-r border-white/10 md:border-b-0 border-b bg-[#F4D06F] text-[#242424] cursor-pointer">Connection</div>
-                <div className="py-6 text-center border-r border-white/10 md:border-b-0 border-b hover:text-white cursor-pointer transition-colors">AI Bliss</div>
-                <div className="py-6 text-center border-r border-white/10 cursor-pointer hover:text-white transition-colors">Tree</div>
-                <div className="py-6 text-center cursor-pointer hover:text-white transition-colors">And more...</div>
+                {NAV_ITEMS.map((item) => (
+                    <div
+                        key={item}
+                        onClick={() => setActiveNav(item)}
+                        className={`py-6 text-center border-r border-white/10 md:border-b-0 border-b cursor-pointer transition-colors ${activeNav === item
+                            ? 'bg-[#F4D06F] text-[#242424]'
+                            : 'hover:text-white'
+                            }`}
+                    >
+                        {item}
+                    </div>
+                ))}
             </div>
 
             <div className="grid md:grid-cols-2 min-h-[600px] relative z-10">
@@ -194,9 +211,37 @@ const HomePage = () => {
                     <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1610440049286-a7dc4c995cfd?q=80&w=2666&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
                 </div>
 
-                <div className="bg-[#D2B48C]/10 p-12 relative overflow-hidden">
+                <div className="bg-[#D2B48C]/10 p-12 relative overflow-hidden flex flex-col items-center justify-center">
                     <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1621250266205-776269b67946?q=80&w=3540&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
-                    <TerminalDemo />
+                    {activeNav === "CLI Installation" ? (
+                        <div className="w-full h-full">
+                            <TerminalDemo />
+                        </div>
+                    ) : activeNav === "Commands" ? (
+                        <div>
+                            <TerminalDemo2 />
+                        </div>
+                    ) : activeNav === "Usage" ? (
+                        <div>
+                            This is for Usage
+                        </div>
+                    ) : activeNav === "Connections" ? (
+                        <div>
+                            This is for Connections
+                        </div>
+                    ) : activeNav === "AI Bliss" ? (
+                        <div>
+                            This is for AI Bliss
+                        </div>
+                    ) : activeNav === "Tree-View" ? (
+                        <div>
+                            This is for Tree-View
+                        </div>
+                    ) : (
+                        <div className="h-full w-full flex items-center justify-center text-2xl text-white font-light tracking-wide relative z-10">
+                            Content for {activeNav}
+                        </div>
+                    )}
                 </div>
             </div>
 
