@@ -25,6 +25,7 @@ import trae from "../assets/trae.png"
 import windsuf from "../assets/windsurf.svg"
 import zed from "../assets/zed.png"
 import { Link, useNavigate } from 'react-router-dom'
+import { TerminalDemo } from '@/components/TerminalDemo'
 
 const SKILLS_DATA = [
     {
@@ -195,6 +196,7 @@ const HomePage = () => {
 
                 <div className="bg-[#D2B48C]/10 p-12 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1621250266205-776269b67946?q=80&w=3540&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
+                    <TerminalDemo />
                 </div>
             </div>
 
@@ -237,10 +239,10 @@ const HomePage = () => {
                     <span className="bg-[#F4D06F] text-[#242424] text-xs font-bold px-2 py-1 uppercase tracking-widest mb-6 inline-block">Skills</span>
                     <h2 className="text-5xl md:text-7xl font-normal tracking-tight mb-8">
                         Say goodbye to <br />
-                        busywork, forever
+                        clutterwork, forever
                     </h2>
                     <p className="text-gray-400 text-lg max-w-xl font-light leading-relaxed">
-                        Commentme learns your preferences and handles tasks the way you would, keeping everything organized without the extra effort.
+                        Commentme  and handles tasks the way you would, keeping everything organized without the extra effort.
                     </p>
                 </div>
 
@@ -349,7 +351,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div id='pricing' className='relative z-10 py-24 border-t border-white/10 overflow-hidden'>
+            {/* <div id='pricing' className='relative z-10 py-24 border-t border-white/10 overflow-hidden'>
                 <div className="relative z-10 container mx-auto px-4 text-center">
                     <span className="bg-[#F4D06F] text-[#242424] text-xs font-bold px-2 py-1 uppercase tracking-widest mb-8 inline-block">Pricing</span>
                     <h2 className="text-3xl md:text-5xl font-normal tracking-tight mb-8 text-white">
@@ -411,7 +413,7 @@ const HomePage = () => {
                     </div>
 
                 </div>
-            </div>
+            </div> */}
 
             <div className="relative border-t border-white/10 flex w-full flex-col items-center justify-center overflow-hidden">
                 <ScrollVelocityContainer className="w-full">
