@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Video, FileSearch, Send, Feather, SquarePen, FilePlus, CheckSquare, UserPlus, List, BadgeDollarSign, LayoutTemplate, ArrowRight, Minus, Plus, Database, FileText, Languages, Github, Copy, Check } from 'lucide-react'
+import React, { useState, useRef } from 'react'
+import { Video, FileSearch, Send, Feather, SquarePen, FilePlus, CheckSquare, UserPlus, List, BadgeDollarSign, LayoutTemplate, ArrowRight, Minus, Plus, Database, FileText, Languages, Github, Copy, Check, Maximize } from 'lucide-react'
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { cn } from "@/lib/utils"
 import { Globe } from "@/components/ui/globe"
@@ -24,9 +24,16 @@ import tabnine from "../assets/tabnine.png"
 import trae from "../assets/trae.png"
 import windsuf from "../assets/windsurf.svg"
 import zed from "../assets/zed.png"
+import thumbnail1 from "../assets/thumbnail1.png"
+import thumbnail2 from "../assets/thumbnail2.png"
 import { Link, useNavigate } from 'react-router-dom'
 import { TerminalDemo } from '@/components/TerminalDemo'
 import { TerminalDemo2 } from '@/components/TerminalDemo2'
+import installationVideo from "../assets/commentmenpm.mp4"
+import commandsVideo from "../assets/commands.mkv"
+import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
+import { AnimatedBeamMultipleOutputDemo } from '@/components/AnimatedBeamMulitpleOutputDemo'
+import { MorphingText } from "@/components/ui/morphing-text"
 
 const SKILLS_DATA = [
     {
@@ -54,27 +61,27 @@ const SKILLS_DATA = [
 const SKILLS_EXPANSION_DATA = [
     {
         icon: FilePlus,
-        title: "Add notes to contacts and households"
+        title: "Add notes to important functions"
     },
     {
         icon: CheckSquare,
-        title: "Create and assign tasks from meeting notes"
+        title: "Understand your codebase with AI"
     },
     {
         icon: UserPlus,
-        title: "Create new contact records in CRM"
+        title: "Debug your codebase with AI"
     },
     {
         icon: List,
-        title: "Set task and calendar reminders"
+        title: "Companion for your productivity"
     },
     {
         icon: BadgeDollarSign,
-        title: "Create new deal from product lines"
+        title: "Save time and effort"
     },
     {
         icon: LayoutTemplate,
-        title: "Create context-aware outputs from templates"
+        title: "A Personal Manager of your comments"
     }
 ]
 
@@ -122,7 +129,7 @@ const NAV_ITEMS = [
     "Usage",
     "Connection",
     "AI Bliss",
-    "Tree",
+    // "Tree",
     "And more..."
 ]
 
@@ -130,6 +137,7 @@ const HomePage = () => {
     const [activeTab, setActiveTab] = useState(0)
     const [activeNav, setActiveNav] = useState("CLI Installation")
     const navigate = useNavigate()
+
     const loginPage = () => {
         navigate("/login")
     }
@@ -151,11 +159,11 @@ const HomePage = () => {
             />
 
             <div className="py-24 px-4 text-center border-b border-white/10 relative z-10">
-                <h1 className="text-6xl md:text-8xl font-normal tracking-tight mb-8">
-                    Automate & Clean your <br />
+                <h1 className="text-4xl md:text-8xl font-normal tracking-tight mb-8">
+                    Automate & Manage your <br />
                     <Highlighter action="underline" color="#3e9cc4ff">commented codebase</Highlighter> with commentme
                 </h1>
-                <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
+                <p className="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
                     <Highlighter action="underline" color="#3e9cc4ff">Commentme-CLI</Highlighter> handles each and every comment in your codebase, cleans it and <br className="hidden md:block" />
                     saves it in a database. Henceforth, it makes debugging more efficient and easy, Ultimately saving you &nbsp;<Highlighter action="highlight" color="#F4D06F"> <span className="text-black font-bold">  time and effort.</span></Highlighter>
                 </p>
@@ -166,10 +174,10 @@ const HomePage = () => {
                     </div>
                 </div> */}
                 <div className="mt-20 flex items-center gap-2 justify-center">
-                    <Github className="h-8 w-8 text-white/80" />
+                    <Github className="h-6 md:h-8 w-6 md:w-8 text-white/80" />
                     <div className="flex items-center gap-3 rounded-xl border border-violet-500/30 bg-black/60 px-4 py-3 backdrop-blur-md">
 
-                        <span className="font-mono text-lg text-white/90">
+                        <span className="font-mono text-xs md:text-lg text-white/90">
                             <span className="text-green-400 mr-1">$</span>
                             {command}
                         </span>
@@ -191,12 +199,12 @@ const HomePage = () => {
                 <p className="text-md text-gray-400 mt-2">Read the Documentation <Link to="/docs" className="text-blue-400 underline">here</Link></p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-7 border-b border-white/10 text-[11px] uppercase tracking-widest font-medium text-gray-500 relative z-10 bg-[#242424]/80 backdrop-blur-sm">
+            <div className="grid grid-cols-2 md:grid-cols-6 border-b border-white/10 md:text-[11px] text-[8px] uppercase tracking-widest md:font-medium text-gray-500 relative z-10 bg-[#242424]/80 backdrop-blur-sm">
                 {NAV_ITEMS.map((item) => (
                     <div
                         key={item}
                         onClick={() => setActiveNav(item)}
-                        className={`py-6 text-center border-r border-white/10 md:border-b-0 border-b cursor-pointer transition-colors ${activeNav === item
+                        className={`md:py-6 py-4 text-center border-r border-white/10 md:border-b-0 border-b cursor-pointer transition-colors ${activeNav === item
                             ? 'bg-[#F4D06F] text-[#242424]'
                             : 'hover:text-white'
                             }`}
@@ -207,51 +215,98 @@ const HomePage = () => {
             </div>
 
             <div className="grid md:grid-cols-2 min-h-[600px] relative z-10">
-                <div className="border-r border-white/10 bg-[#D2B48C]/5 p-12 relative overflow-hidden group">
+                <div className={cn(
+                    "border-r border-white/10 bg-[#D2B48C]/5 md:p-12 p-3 relative overflow-hidden group transition-all duration-500",
+                    activeNav === "Usage" && "md:col-span-2 border-r-0"
+                )}>
                     <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1610440049286-a7dc4c995cfd?q=80&w=2666&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
-                </div>
-
-                <div className="bg-[#D2B48C]/10 p-12 relative overflow-hidden flex flex-col items-center justify-center">
-                    <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1621250266205-776269b67946?q=80&w=3540&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
                     {activeNav === "CLI Installation" ? (
-                        <div className="w-full h-full">
-                            <TerminalDemo />
+                        <div className="w-full h-full flex items-center justify-center">
+                            <div className="w-full h-full flex items-center justify-center">
+                                <HeroVideoDialog
+                                    className="block dark:hidden"
+                                    animationStyle="from-center"
+                                    videoSrc={installationVideo}
+                                    thumbnailSrc={thumbnail1}
+                                    thumbnailAlt="Install the CLI Now!"
+                                />
+                            </div>
                         </div>
                     ) : activeNav === "Commands" ? (
-                        <div>
-                            <TerminalDemo2 />
+                        <div className="w-full h-full flex items-center justify-center">
+                            <div className="w-full h-full flex items-center justify-center">
+                                <HeroVideoDialog
+                                    className="block dark:hidden"
+                                    animationStyle="from-center"
+                                    videoSrc={commandsVideo}
+                                    thumbnailSrc={thumbnail2}
+                                    thumbnailAlt="Guides to our commands"
+                                />
+
+                            </div>
                         </div>
                     ) : activeNav === "Usage" ? (
-                        <div>
-                            This is for Usage
+                        <div className="w-full h-full flex items-center justify-center min-h-[500px]">
+                            <AnimatedBeamMultipleOutputDemo className="w-full h-full" />
                         </div>
-                    ) : activeNav === "Connections" ? (
-                        <div>
-                            This is for Connections
+                    ) : activeNav === "Connection" ? (
+                        <div className="w-full h-full flex items-center justify-center">
+                            <MorphingText texts={["WEBSITE", "AND", "CLI", "SYNCED", "TOGETHER"]} />
                         </div>
                     ) : activeNav === "AI Bliss" ? (
                         <div>
                             This is for AI Bliss
                         </div>
-                    ) : activeNav === "Tree-View" ? (
-                        <div>
-                            This is for Tree-View
-                        </div>
                     ) : (
                         <div className="h-full w-full flex items-center justify-center text-2xl text-white font-light tracking-wide relative z-10">
-                            Content for {activeNav}
+                            {activeNav}
                         </div>
                     )}
                 </div>
+
+                {activeNav !== "Usage" && (
+                    <div className="bg-[#D2B48C]/10 md:p-12 p-3 relative overflow-hidden flex flex-col items-center justify-center">
+                        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1621250266205-776269b67946?q=80&w=3540&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
+                        {activeNav === "CLI Installation" ? (
+                            <div className="w-full h-full">
+                                <TerminalDemo />
+                            </div>
+                        ) : activeNav === "Commands" ? (
+                            <div>
+                                <TerminalDemo2 />
+                            </div>
+                        ) : activeNav === "Connection" ? (
+                            <div className="w-full h-full min-h-[400px] flex items-center justify-center">
+                                <img
+                                    src="https://media1.tenor.com/m/TyP-awwTMWwAAAAC/my-man-together.gif"
+                                    alt="Tenor GIF"
+                                    className="h-[400px] w-auto rounded-lg object-contain"
+                                />
+                            </div>
+                        ) : activeNav === "AI Bliss" ? (
+                            <div>
+                                This is for AI Bliss
+                            </div>
+                        ) : activeNav === "Tree-View" ? (
+                            <div>
+                                This is for Tree-View
+                            </div>
+                        ) : (
+                            <div className="h-full w-full flex items-center justify-center text-2xl text-white font-light tracking-wide relative z-10">
+                                Content for {activeNav}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
 
             <div className='grid md:grid-cols-5 h-[100px] relative z-10'>
                 <div className="md:col-span-3 border-r border-t border-white/10 p-12 relative overflow-hidden group" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 255, 255, 0.05) 20px, rgba(255, 255, 255, 0.05) 21px)" }}>
                 </div>
-                <div className="border-r border-t border-white/10 bg-[#3e9cc4ff] px-5 py-5 text-2xl tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center">
+                <div className="border-r border-t border-white/10 bg-[#3e9cc4ff] md:px-5 md:py-5 px-4 py-4 md:text-2xl text-md tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center">
                     Demo
                 </div>
-                <div className="border-t border-white/10 bg-[#F4D06F] text-[#242424] px-5 py-5 text-2xl tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center" onClick={loginPage}>
+                <div className="border-t border-white/10 bg-[#F4D06F] text-[#242424] md:px-5 md:py-5 px-4 py-4 md:text-2xl text-md tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center" onClick={loginPage}>
                     Get Started
                 </div>
             </div>

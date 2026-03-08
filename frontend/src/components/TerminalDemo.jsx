@@ -6,7 +6,7 @@ import {
 
 export function TerminalDemo() {
     return (
-        <Terminal className="mt-26 w-full h-full max-h-[300px]">
+        <Terminal className="md:mt-26 w-full h-full max-h-[300px]">
             <TypingAnimation>&gt; npm install -g commentme</TypingAnimation>
 
             <AnimatedSpan className="text-green-500">

@@ -6,7 +6,7 @@ import {
 
 export function TerminalDemo2() {
     return (
-        <Terminal className="w-500 h-600">
+        <Terminal className="w-500 h-full">
             <TypingAnimation>&gt; commentme --help</TypingAnimation>
 
             <AnimatedSpan className="text-green-500">
@@ -17,70 +17,45 @@ export function TerminalDemo2() {
                 Commands:
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                #Get a specific comment by line range
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --login / --signup / --logout</span>
+                <span className="text-gray-500 italic ml-2"># Auth</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                commentme --get line-7-7 "file-name"
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --get line-7-7 &lt;file&gt;</span>
+                <span className="text-gray-500 italic ml-2"># Get specific</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                #Get all comments
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --get lines &lt;file&gt;</span>
+                <span className="text-gray-500 italic ml-2"># Get all</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                commentme --get lines "file-name"
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --edit / --delete &lt;file&gt;</span>
+                <span className="text-gray-500 italic ml-2"># Modify</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                #Edit an existing comment
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --skim / --unskim &lt;file&gt;</span>
+                <span className="text-gray-500 italic ml-2"># Redact/Restore</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                commentme --edit line-7-7 "file-name"
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --generate / --explain &lt;file&gt;</span>
+                <span className="text-gray-500 italic ml-2"># AI Features</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                #Delete a comment
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --sanitize &lt;file&gt;</span>
+                <span className="text-gray-500 italic ml-2"># Remove comments fully</span>
             </AnimatedSpan>
 
-            <AnimatedSpan className="text-green-500">
-                commentme --delete line-7-7 "file-name"
+            <AnimatedSpan className="text-blue-400">
+                <span>commentme --set-key / --clear-key</span>
+                <span className="text-gray-500 italic ml-2"># BYOKey</span>
             </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                #Redact comments from a file and store them
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                commentme --skim "file-name"
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                #Restore comments to a file
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                commentme --unskim "file-name"
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                #Log out from your session
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                commentme --logout
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                #Show this help message
-            </AnimatedSpan>
-
-            <AnimatedSpan className="text-green-500">
-                commentme --help
-            </AnimatedSpan>
-
 
         </Terminal >
     )

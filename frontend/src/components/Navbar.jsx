@@ -22,7 +22,7 @@ const Navbar = () => {
             {/* Logo Section */}
             <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
                 <img src={logo} alt="CommentMe Logo" className='rounded w-16 h-16' />
-                <span className="text-2xl font-medium tracking-tight">CommentMe</span>
+                <span className="md:text-2xl text-xl font-medium tracking-tight">CommentMe</span>
             </div>
 
             {/* Navigation Links */}
