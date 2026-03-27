@@ -223,7 +223,7 @@ const AuthPage = () => {
                             Terms of Service
                         </a>{' '}
                         and{' '}
-                        <a href="https://vanilla-nut-5bb.notion.site/Security-Policy-3302898f76bd805d8832d1c62de39abb?source=copy_link" className="underline underline-offset-4 hover:text-white">
+                        <a href="https://vanilla-nut-5bb.notion.site/Privacy-Policy-3302898f76bd8035a814d9a1b2c4a9bc?source=copy_link" className="underline underline-offset-4 hover:text-white">
                             Privacy Policy
                         </a>
                         .
