@@ -27,10 +27,10 @@ const Navbar = () => {
 
             {/* Navigation Links */}
             <div className="hidden lg:flex items-center gap-8 text-[13px] font-medium tracking-widest text-gray-300">
-                <Link to="#" className="hover:text-white transition-colors uppercase">Skills</Link>
-                <Link to="#" className="hover:text-white transition-colors uppercase">Integrations</Link>
+                <Link to="/" className="hover:text-white transition-colors uppercase">Skills</Link>
+                <Link to="/" className="hover:text-white transition-colors uppercase">Integrations</Link>
                 <Link to="/docs" className="hover:text-white transition-colors uppercase">Docs</Link>
-                <Link to="#" className="hover:text-white transition-colors uppercase">Pricing</Link>
+                <Link to="/" className="hover:text-white transition-colors uppercase">Use Cases</Link>
                 {user && <Link to="/dashboard" className="hover:text-white transition-colors uppercase text-blue-400">Dashboard</Link>}
             </div>
 
@@ -54,7 +54,7 @@ const Navbar = () => {
             <div className="hidden lg:block">
                 <button
                     className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer"
-                    onClick={user ? handleLogout : () => navigate('/login')}
+                    onClick={user ? handleLogout : () => navigate('/auth')}
                 >
                     {user ? "Logout" : "Get Started"}
                 </button>
@@ -63,10 +63,10 @@ const Navbar = () => {
             {/* Mobile Menu Overlay */}
             {isMenuOpen && (
                 <div className="absolute top-[72px] left-0 w-full bg-[#242424] border-b border-white/10 z-50 flex flex-col items-center py-6 gap-6 lg:hidden">
-                    <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Skills</Link>
-                    <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Integrations</Link>
+                    <Link to="/" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Skills</Link>
+                    <Link to="/" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Integrations</Link>
                     <Link to="/docs" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Docs</Link>
-                    <Link to="#" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Pricing</Link>
+                    <Link to="/" className="nav-link-mobile" onClick={() => setIsMenuOpen(false)}>Use Cases</Link>
                     {user && (
                         <Link to="/dashboard" className="nav-link-mobile text-blue-400" onClick={() => setIsMenuOpen(false)}>
                             Dashboard
@@ -74,7 +74,7 @@ const Navbar = () => {
                     )}
                     <button
                         className="bg-[#EDE8D8] text-[#242424] px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase hover:bg-white transition-colors cursor-pointer w-3/4"
-                        onClick={user ? () => { setIsMenuOpen(false); handleLogout(); } : () => { setIsMenuOpen(false); navigate('/login'); }}
+                        onClick={user ? () => { setIsMenuOpen(false); handleLogout(); } : () => { setIsMenuOpen(false); navigate('/auth'); }}
                     >
                         {user ? "Logout" : "Get Started"}
                     </button>

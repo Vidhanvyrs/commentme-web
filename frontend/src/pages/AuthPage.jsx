@@ -219,11 +219,11 @@ const AuthPage = () => {
 
                     <p className="px-8 text-center text-sm text-gray-400">
                         By clicking continue, you agree to our{' '}
-                        <a href="#" className="underline underline-offset-4 hover:text-white">
+                        <a href="https://vanilla-nut-5bb.notion.site/Terms-and-Conditions-3302898f76bd8089906fc15eb035b9b3?source=copy_link" className="underline underline-offset-4 hover:text-white">
                             Terms of Service
                         </a>{' '}
                         and{' '}
-                        <a href="#" className="underline underline-offset-4 hover:text-white">
+                        <a href="https://vanilla-nut-5bb.notion.site/Security-Policy-3302898f76bd805d8832d1c62de39abb?source=copy_link" className="underline underline-offset-4 hover:text-white">
                             Privacy Policy
                         </a>
                         .

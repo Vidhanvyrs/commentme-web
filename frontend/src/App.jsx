@@ -20,7 +20,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<AuthPage />} />
+          <Route path="/auth" element={<AuthPage />} />
           <Route path="/dashboard" element={<DashBoardPage />} />
           <Route path="/docs" element={<DocsPage />} />
         </Routes>

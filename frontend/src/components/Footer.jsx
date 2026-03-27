@@ -4,19 +4,23 @@ const Footer = () => {
     const FOOTER_LINKS = [
         {
             label: "PRODUCT",
-            links: ["SKILLS", "INTEGRATIONS", "PRICING", "LOGIN", "SIGN UP"]
+            links: ["SKILLS", "INTEGRATIONS", "PRICING", "LOGIN", "SIGN UP"],
+            urls: ["/", "/", "/", "/auth", "/auth"]
         },
         {
             label: "WHO USES COMMENTME",
-            links: ["SALES", "FINANCIAL ADVISORS", "EXECUTIVES", "RECRUITERS", "ASSISTANTS"]
+            links: ["SALES", "FINANCIAL ADVISORS", "EXECUTIVES", "RECRUITERS", "ASSISTANTS"],
+            urls: ["/", "/", "/", "/", "/"]
         },
         {
             label: "RESOURCES",
-            links: ["HELP", "USE CASES", "BLOG"]
+            links: ["HELP", "USE CASES", "BLOG"],
+            urls: ["https://github.com/Vidhanvyrs/commentme", "https://www.npmjs.com/package/commentme", "https://dev.to/vidhanvyrs"]
         },
         {
             label: "LEGAL",
-            links: ["PRIVACY", "TERMS", "SECURITY"]
+            links: ["PRIVACY", "TERMS", "SECURITY"],
+            urls: ["https://vanilla-nut-5bb.notion.site/Privacy-Policy-3302898f76bd8035a814d9a1b2c4a9bc?source=copy_link", "https://vanilla-nut-5bb.notion.site/Terms-and-Conditions-3302898f76bd8089906fc15eb035b9b3?source=copy_link", "https://vanilla-nut-5bb.notion.site/Security-Policy-3302898f76bd805d8832d1c62de39abb?source=copy_link"]
         }
     ]
     return (
@@ -28,7 +32,7 @@ const Footer = () => {
                         <div className="flex flex-wrap gap-x-2 gap-y-1">
                             {row.links.map((link, linkIdx) => (
                                 <React.Fragment key={linkIdx}>
-                                    <a href="#" className="hover:text-[#F4D06F] transition-colors">{link}</a>
+                                    <a href={row.urls[linkIdx]} target='_blank' className="hover:text-[#F4D06F] transition-colors">{link}</a>
                                     {linkIdx !== row.links.length - 1 && <span className="text-gray-700">/</span>}
                                 </React.Fragment>
                             ))}

@@ -26,6 +26,7 @@ import windsuf from "../assets/windsurf.svg"
 import zed from "../assets/zed.png"
 import thumbnail1 from "../assets/thumbnail1.png"
 import thumbnail2 from "../assets/thumbnail2.png"
+import citymap from "../assets/citymap.png"
 import { Link, useNavigate } from 'react-router-dom'
 import { TerminalDemo } from '@/components/TerminalDemo'
 import { TerminalDemo2 } from '@/components/TerminalDemo2'
@@ -140,7 +141,10 @@ const HomePage = () => {
     const navigate = useNavigate()
 
     const loginPage = () => {
-        navigate("/login")
+        navigate("/auth")
+    }
+    const demoPage = () => {
+        navigate("/docs")
     }
     const command = "npm install -g commentme-cli";
     const [copied, setCopied] = useState(false);
@@ -300,7 +304,7 @@ const HomePage = () => {
             <div className='grid md:grid-cols-5 h-[100px] relative z-10'>
                 <div className="md:col-span-3 border-r border-t border-white/10 p-12 relative overflow-hidden group" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 255, 255, 0.05) 20px, rgba(255, 255, 255, 0.05) 21px)" }}>
                 </div>
-                <div className="border-r border-t border-white/10 bg-[#3e9cc4ff] md:px-5 md:py-5 px-4 py-4 md:text-2xl text-md tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center">
+                <div className="border-r border-t border-white/10 bg-[#3e9cc4ff] md:px-5 md:py-5 px-4 py-4 md:text-2xl text-md tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center" onClick={demoPage}>
                     Demo
                 </div>
                 <div className="border-t border-white/10 bg-[#F4D06F] text-[#242424] md:px-5 md:py-5 px-4 py-4 md:text-2xl text-md tracking-wider uppercase hover:bg-white hover:text-[#242424] transition-colors cursor-pointer relative overflow-hidden flex items-center justify-center" onClick={loginPage}>
@@ -511,6 +515,14 @@ const HomePage = () => {
 
                 </div>
             </div> */}
+            <div>
+                <img
+                    src={citymap}
+                    alt="map"
+                    loading="lazy"
+                    decoding="async"
+                />
+            </div>
 
             <div className="relative border-t border-white/10 flex w-full flex-col items-center justify-center overflow-hidden">
                 <ScrollVelocityContainer className="w-full">
