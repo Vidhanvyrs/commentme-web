@@ -34,6 +34,7 @@ import commandsVideo from "../assets/commands.mkv"
 import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
 import { AnimatedBeamMultipleOutputDemo } from '@/components/AnimatedBeamMulitpleOutputDemo'
 import { MorphingText } from "@/components/ui/morphing-text"
+import IconCloud from '@/components/IconCloud'
 
 const SKILLS_DATA = [
     {
@@ -203,8 +204,8 @@ const HomePage = () => {
                 {NAV_ITEMS.map((item) => (
                     <div
                         key={item}
-                        onClick={() => setActiveNav(item)}
-                        className={`md:py-6 py-4 text-center border-r border-white/10 md:border-b-0 border-b cursor-pointer transition-colors ${activeNav === item
+                        onClick={() => item !== "And more..." && setActiveNav(item)}
+                        className={`md:py-6 py-4 text-center border-r border-white/10 md:border-b-0 border-b transition-colors ${item !== "And more..." ? 'cursor-pointer' : 'cursor-default opacity-50'} ${activeNav === item
                             ? 'bg-[#F4D06F] text-[#242424]'
                             : 'hover:text-white'
                             }`}
@@ -255,13 +256,10 @@ const HomePage = () => {
                         </div>
                     ) : activeNav === "AI Bliss" ? (
                         <div>
-                            This is for AI Bliss
+                            <IconCloud />
                         </div>
-                    ) : (
-                        <div className="h-full w-full flex items-center justify-center text-2xl text-white font-light tracking-wide relative z-10">
-                            {activeNav}
-                        </div>
-                    )}
+                    ) : ""
+                    }
                 </div>
 
                 {activeNav !== "Usage" && (
@@ -285,17 +283,16 @@ const HomePage = () => {
                             </div>
                         ) : activeNav === "AI Bliss" ? (
                             <div>
-                                This is for AI Bliss
+                                <h1 className='text-4xl font-bold'>Blessed with performance of AI Models</h1>
+                                <p className='text-lg font-medium mt-5'>Our Website and cli package uses clean approaches that uses AI in certain way as per the user requirement and nuances</p>
+                                <p className='text-sm font-extralight'>The AI features powering Commentme are built on leading open-source models — the same foundations trusted by engineers and researchers worldwide. By choosing open-source, we ensure our AI capabilities are auditable, adaptable, and free from single-vendor dependency, so you always get reliable, unbiased results.</p>
                             </div>
                         ) : activeNav === "Tree-View" ? (
                             <div>
                                 This is for Tree-View
                             </div>
-                        ) : (
-                            <div className="h-full w-full flex items-center justify-center text-2xl text-white font-light tracking-wide relative z-10">
-                                Content for {activeNav}
-                            </div>
-                        )}
+                        ) : ""
+                        }
                     </div>
                 )}
             </div>

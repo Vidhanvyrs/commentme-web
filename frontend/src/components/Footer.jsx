@@ -46,11 +46,11 @@ const Footer = () => {
                 </div>
 
                 <div className="flex gap-4">
-                    <a href="#" className="hover:text-[#3e9cc4ff] transition-colors">LINKEDIN</a>
+                    <a href="https://www.linkedin.com/in/vidhan-solanki-dotlasher001/" target='_blank' className="hover:text-[#3e9cc4ff] transition-colors">LINKEDIN</a>
                     <span className="text-gray-700">/</span>
-                    <a href="#" className="hover:text-[#3e9cc4ff] transition-colors">X</a>
-                    <span className="text-gray-700">/</span>
-                    <a href="#" className="hover:text-[#3e9cc4ff] transition-colors">YOUTUBE</a>
+                    <a href="https://x.com/DotLasher" target='_blank' className="hover:text-[#3e9cc4ff] transition-colors">X</a>
+                    {/* <span className="text-gray-700">/</span> */}
+                    {/* <a href="#" className="hover:text-[#3e9cc4ff] transition-colors">YOUTUBE</a> */}
                     <span className="text-gray-700">/</span>
                     <a href="#" className="hover:text-[#3e9cc4ff] transition-colors">INSTAGRAM</a>
                 </div>
