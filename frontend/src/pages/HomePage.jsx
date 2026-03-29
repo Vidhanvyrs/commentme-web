@@ -146,7 +146,7 @@ const HomePage = () => {
     const demoPage = () => {
         navigate("/docs")
     }
-    const command = "npm install -g commentme-cli";
+    const command = "npm install commentme";
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
